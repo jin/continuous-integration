@@ -6,7 +6,7 @@ Bazel build sheriff.
 # The dashboard
 
 A general dashboard to have a quick view of the general health is available
-at (http://ci.bazel.io/view/Dashboard/)[http://ci.bazel.io/view/Dashboard/].
+at http://ci.bazel.io/view/Dashboard/.
 This dashboard represent the health of all important builds that runs on the CI
 system.
 
