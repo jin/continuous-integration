@@ -235,7 +235,7 @@ def python_binary(platform=None):
     if platform == "windows":
         return "python.exe"
     if platform == "macos":
-        return "python3.7"
+        return "python3.6"
     return "python3.6"
 
 
@@ -259,7 +259,7 @@ def bazelcipy_url():
     """
     URL to the latest version of this script.
     """
-    return "https://raw.githubusercontent.com/bazelbuild/continuous-integration/master/buildkite/bazelci.py"
+    return "https://raw.githubusercontent.com/jin/continuous-integration/performance/buildkite/bazelci.py"
 
 
 def platforms_info():
@@ -668,31 +668,31 @@ def execute_bazel_run(bazel_binary, targets):
 
 
 def remote_caching_flags(platform):
-    if is_pull_request():
-        common_flags = ["--bes_backend=buildeventservice.googleapis.com",
-                        "--bes_best_effort=false",
-                        "--bes_timeout=360s",
-                        "--tls_enabled",
-                        "--project_id=bazel-public",
-                        "--remote_instance_name=projects/bazel-public",
-                        # TODO(ulfjack): figure out how to resolve
-                        # https://github.com/bazelbuild/bazel/issues/5382 and as part of that keep
-                        # or remove the `--disk_cache=` flag.
-                        "--disk_cache=",
-                        "--remote_timeout=360",
-                        "--remote_cache=remotebuildexecution.googleapis.com",
-                        "--experimental_remote_platform_override=properties:{name:\"platform\" value:\"" + platform + "\"}"]
-    else:
-        common_flags = ["--remote_timeout=10",
-                        # TODO(ulfjack): figure out how to resolve
-                        # https://github.com/bazelbuild/bazel/issues/5382 and as part of that keep
-                        # or remove the `--disk_cache=` flag.
-                        "--disk_cache=",
-                        "--remote_max_connections=200",
-                        "--experimental_remote_platform_override=properties:{name:\"platform\" value:\"" + platform + "\"}",
-                        "--remote_http_cache=https://storage.googleapis.com/bazel-buildkite-cache"]
-    if platform in ["ubuntu1404", "ubuntu1604", "ubuntu1804", "macos", "windows"]:
-        return common_flags + ["--google_default_credentials", "--experimental_guard_against_concurrent_changes"]
+    # if is_pull_request():
+    #     common_flags = ["--bes_backend=buildeventservice.googleapis.com",
+    #                     "--bes_best_effort=false",
+    #                     "--bes_timeout=360s",
+    #                     "--tls_enabled",
+    #                     "--project_id=bazel-public",
+    #                     "--remote_instance_name=projects/bazel-public",
+    #                     # TODO(ulfjack): figure out how to resolve
+    #                     # https://github.com/bazelbuild/bazel/issues/5382 and as part of that keep
+    #                     # or remove the `--disk_cache=` flag.
+    #                     "--disk_cache=",
+    #                     "--remote_timeout=360",
+    #                     "--remote_cache=remotebuildexecution.googleapis.com",
+    #                     "--experimental_remote_platform_override=properties:{name:\"platform\" value:\"" + platform + "\"}"]
+    # else:
+    #     common_flags = ["--remote_timeout=10",
+    #                     # TODO(ulfjack): figure out how to resolve
+    #                     # https://github.com/bazelbuild/bazel/issues/5382 and as part of that keep
+    #                     # or remove the `--disk_cache=` flag.
+    #                     "--disk_cache=",
+    #                     "--remote_max_connections=200",
+    #                     "--experimental_remote_platform_override=properties:{name:\"platform\" value:\"" + platform + "\"}",
+    #                     "--remote_http_cache=https://storage.googleapis.com/bazel-buildkite-cache"]
+    # if platform in ["ubuntu1404", "ubuntu1604", "ubuntu1804", "macos", "windows"]:
+    #     return common_flags + ["--google_default_credentials", "--experimental_guard_against_concurrent_changes"]
     return []
 
 
